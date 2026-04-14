@@ -1,0 +1,62 @@
+/* simple reset */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    color:#333;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#wrapper {
+    margin: 0 auto;
+}
+
+#header {
+    height: 180px;
+    background: #FFffff;
+    padding-top:30px;
+    clear: both;
+}
+
+#content {
+    float: left;
+    background: #FFFFFF;
+    margin:0 auto;
+    position:relative;
+}
+
+#footer {
+    height: 100px;
+    background: #ffffff;
+    clear: both;
+}
+
+#footer p {
+    padding : 5px;
+}
+
+.cards {
+    display: flex;
+    /* Put a card in the next row when previous cards take all width */
+    flex-wrap: wrap;
+    margin-left: -8px;
+    margin-right: -8px;
+}
+
+.cards__item {
+    /* There will be 4 cards per row */
+    flex-basis: 20%;
+
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin:0 auto;
+}
+
+.gal_img {
+    width: 250px;
+}

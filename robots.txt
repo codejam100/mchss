@@ -1,0 +1,30 @@
+# robots.txt for Mother Convent Higher Secondary School Website
+# Directs search engines on how to crawl and index the site
+
+User-agent: *
+Allow: /
+Disallow: /.venv/
+Disallow: /admin/
+Disallow: /*.py
+Disallow: /*.pyc
+
+# Allow search engines to index all pages
+Allow: /index.html
+Allow: /gallery.html
+Allow: /images/
+Allow: /css/
+
+# Sitemap location (if you create one)
+# Sitemap: https://www.motherconventhsschool.in/sitemap.xml
+
+# Crawl delay (be respectful to servers)
+Crawl-delay: 1
+
+# Specific rules for common search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

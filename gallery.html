@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mother Convent Higher Secondary School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        /* Gallery styling - Dynamic columns based on screen size */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            padding: 16px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            background: #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            aspect-ratio: 1;
+            width: 100%;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Modal/Zoom styling */
+        .modal {
+            display: none !important;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            visibility: hidden;
+        }
+
+        .modal.show {
+            display: flex !important;
+            visibility: visible;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            width: auto;
+            height: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #bbb;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 30px;
+            padding: 15px 20px;
+            cursor: pointer;
+            z-index: 1001;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .modal-nav:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .modal-prev {
+            left: 20px;
+        }
+
+        .modal-next {
+            right: 20px;
+        }
+
+        .modal-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Mobile Responsive Gallery Styles - Dynamic Columns */
+        
+        /* Extra Large Screens (1400px+) - 6 columns */
+        @media (min-width: 1400px) {
+            .gallery-container {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 18px;
+                padding: 18px;
+            }
+        }
+
+        /* Large Desktop (1200px - 1399px) - 5 columns */
+        @media (min-width: 1200px) and (max-width: 1399px) {
+            .gallery-container {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 16px;
+                padding: 16px;
+            }
+        }
+
+        /* Desktop (1025px - 1199px) - 4 columns */
+        @media (min-width: 1025px) and (max-width: 1199px) {
+            .gallery-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+        }
+
+        /* Large Tablets (769px - 1024px) - 3 columns */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .gallery-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px;
+                padding: 14px;
+            }
+        }
+
+        /* Medium Tablets (560px - 768px) - 2 columns */
+        @media (min-width: 560px) and (max-width: 768px) {
+            #header {
+                padding: 15px 10px;
+            }
+
+            #header img {
+                height: 80px !important;
+            }
+
+            #header p {
+                font-size: 16px !important;
+                margin: 5px 0 !important;
+                padding: 0 !important;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .modal {
+                padding: 10px;
+            }
+
+            .modal-content {
+                max-height: calc(100vh - 80px);
+            }
+
+            .modal-content img {
+                max-height: calc(100vh - 100px);
+            }
+
+            .modal-nav {
+                font-size: 24px;
+                padding: 12px 16px;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal-close {
+                font-size: 32px;
+                top: 15px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .modal-counter {
+                bottom: 20px;
+                font-size: 13px;
+                background: rgba(0,0,0,0.8);
+            }
+        }
+
+        /* Small Tablets (481px - 559px) - 2 columns */
+        @media (min-width: 481px) and (max-width: 559px) {
+            #header {
+                padding: 12px 8px;
+            }
+
+            #header img {
+                height: 70px !important;
+            }
+
+            #header p {
+                font-size: 14px !important;
+                margin: 4px 0 !important;
+                padding: 0 !important;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+        }
+
+        /* Small Mobile Devices (360px - 480px) - 2 columns */
+        @media (min-width: 360px) and (max-width: 480px) {
+            #header {
+                padding: 10px 8px;
+            }
+
+            #header img {
+                height: 60px !important;
+            }
+
+            #header p {
+                font-size: 14px !important;
+                margin: 3px 0 !important;
+                padding: 0 !important;
+            }
+
+            #header p:first-of-type {
+                padding-top: 5px !important;
+            }
+
+            #content {
+                padding-top: 0 !important;
+            }
+
+            #content > p {
+                font-size: 16px !important;
+                margin: 8px 0 !important;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .gallery-item {
+                border-radius: 6px;
+            }
+
+            .gallery-item:hover {
+                transform: scale(1.03);
+            }
+
+            .modal {
+                padding: 5px;
+                align-items: flex-start;
+                justify-content: center;
+                padding-top: 5px;
+            }
+
+            .modal.show {
+                align-items: center;
+            }
+
+            .modal-content {
+                max-width: 95vw;
+                max-height: calc(100vh - 80px);
+                padding: 0 5px;
+            }
+
+            .modal-content img {
+                max-width: 95vw;
+                max-height: calc(100vh - 100px);
+            }
+
+            .modal-nav {
+                font-size: 20px;
+                padding: 8px 10px;
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .modal-prev {
+                left: 5px;
+            }
+
+            .modal-next {
+                right: 5px;
+            }
+
+            .modal-close {
+                font-size: 28px;
+                top: 8px;
+                right: 8px;
+                width: 36px;
+                height: 36px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1002;
+            }
+
+            .modal-counter {
+                bottom: 10px;
+                font-size: 12px;
+                padding: 8px 12px;
+                background: rgba(0,0,0,0.9);
+                z-index: 1001;
+            }
+        }
+
+        /* Ultra Small Mobile (< 360px) - 2 columns */
+        @media (max-width: 359px) {
+            .gallery-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+                padding: 6px;
+            }
+
+            .gallery-item {
+                border-radius: 4px;
+            }
+
+            #header {
+                padding: 8px 6px;
+            }
+
+            #header img {
+                height: 50px !important;
+            }
+
+            #header p {
+                font-size: 12px !important;
+                margin: 2px 0 !important;
+            }
+
+            .modal-nav {
+                font-size: 18px;
+                padding: 6px 8px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .modal-close {
+                font-size: 24px;
+                width: 32px;
+                height: 32px;
+            }
+
+            .modal-counter {
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+        }
+
+        /* Landscape Orientation - 4 columns */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .gallery-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+
+            #header {
+                padding: 8px;
+            }
+
+            #header img {
+                height: 50px !important;
+            }
+
+            #header p {
+                font-size: 13px !important;
+                margin: 2px 0 !important;
+            }
+
+            .modal-content img {
+                max-height: calc(100vh - 80px);
+            }
+
+            .modal-nav {
+                padding: 6px 10px;
+                font-size: 18px;
+            }
+
+            .modal-close {
+                top: 5px;
+                right: 10px;
+            }
+
+            .modal-counter {
+                bottom: 8px;
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+        }
+
+        /* Touch-friendly adjustments */
+        @media (hover: none) and (pointer: coarse) {
+            .gallery-item {
+                transform: scale(0.98);
+            }
+
+            .gallery-item:active {
+                transform: scale(1);
+                box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            }
+
+            .modal-nav {
+                min-width: 48px;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        /* Navigation Menu Styles */
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px auto;
+            padding: 15px;
+            max-width: 1200px;
+        }
+
+        .nav-item {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .gallery-section {
+            display: none;
+        }
+
+        .gallery-section.active {
+            display: block;
+        }
+
+        .modal-image-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-image-display img {
+            max-width: 90%;
+            max-height: 600px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-image-display img:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 10px;
+                padding: 10px;
+                margin: 15px auto;
+            }
+
+            .nav-item {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+
+            .modal-image-display img {
+                max-height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu {
+                gap: 8px;
+                padding: 8px;
+                margin: 10px auto;
+            }
+
+            .nav-item {
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+
+            .modal-image-display img {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header" style="text-align:center; margin:0 auto;">
+            <!-- logo image saved locally -->
+            <img src="images/logo.png" alt="School Logo" style="height:120px;">
+            <p style="font-size:20px; font-weight:300;">Mother Convent Higher Secondary School</p>
+            <p style="font-size:13px; font-weight:100; padding-top:10px;">( जानकी मेमोरियल ऐजुकेशन सोसायटी द्वारा संचालित )</p>
+        </div>
+        <div id="content">
+            <br>
+            <!-- Navigation Menu -->
+            <div class="nav-menu">
+                <button class="nav-item active" onclick="showGallery('photo-gallery')">Photo Gallery</button>
+                <button class="nav-item" onclick="showGallery('book-list-primary')">Book List Nursery to Class 3</button>
+                <button class="nav-item" onclick="showGallery('book-list-secondary')">Book List Class 4th to Class 9th</button>
+                <button class="nav-item" onclick="showGallery('book-stores')">Book Stores</button>
+                <button class="nav-item" onclick="showGallery('uniform-shops')">Uniform Shops</button>
+            </div>
+            <br>
+
+            <!-- Photo Gallery Section -->
+            <div id="photo-gallery" class="gallery-section active">
+                <p style="margin:0 auto; text-align:center; font-size: 18px; font-weight: 300;">Photo Gallery</p>
+                <br>
+            <div class="gallery-container">
+                <div class="gallery-item" data-src="images/new_gallery/Image_0.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_0.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_1.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_1.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_10.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_10.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_11.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_11.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_12.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_12.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_13.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_13.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_14.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_14.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_15.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_15.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_16.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_16.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_17.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_17.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_18.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_18.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_19.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_19.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_2.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_2.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_20.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_20.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_21.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_21.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_22.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_22.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_23.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_23.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_24.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_24.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_25.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_25.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_26.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_26.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_27.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_27.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_28.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_28.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_29.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_29.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_3.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_3.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_30.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_30.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_4.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_4.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_5.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_5.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_6.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_6.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_7.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_7.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_8.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_8.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/Image_9.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/Image_9.jpeg" alt="Gallery image">
+                </div>
+                <div class="gallery-item" data-src="images/new_gallery/splash.jpeg" onclick="openModal(this)">
+                    <img src="images/new_gallery/splash.jpeg" alt="Gallery image">
+                </div>
+            </div>
+            <br><br>
+
+            <!-- Book List Nursery to Class 3 Section -->
+            <div id="book-list-primary" class="gallery-section">
+                <p style="margin:0 auto; text-align:center; font-size: 18px; font-weight: 300;">Book List Nursery to Class 3</p>
+                <br>
+                <div class="modal-image-display" onclick="openImageModal('assets/images/Nusery_to_Third.jpg')" style="cursor: pointer;">
+                    <img src="assets/images/Nusery_to_Third.jpg" alt="Book List Nursery to Class 3" style="pointer-events: none;">
+                </div>
+                <br><br>
+            </div>
+
+            <!-- Book List Class 4th to Class 9th Section -->
+            <div id="book-list-secondary" class="gallery-section">
+                <p style="margin:0 auto; text-align:center; font-size: 18px; font-weight: 300;">Book List Class 4th to Class 9th</p>
+                <br>
+                <div class="modal-image-display" onclick="openImageModal('assets/images/Fourth_to_Nineth.jpg')" style="cursor: pointer;">
+                    <img src="assets/images/Fourth_to_Nineth.jpg" alt="Book List Class 4th to Class 9th" style="pointer-events: none;">
+                </div>
+                <br><br>
+            </div>
+
+            <!-- Book Stores Section -->
+            <div id="book-stores" class="gallery-section">
+                <p style="margin:0 auto; text-align:center; font-size: 18px; font-weight: 300;">Book Stores</p>
+                <br>
+                <div class="modal-image-display" onclick="openImageModal('assets/images/Book_Stores.jpg')" style="cursor: pointer;">
+                    <img src="assets/images/Book_Stores.jpg" alt="Book Stores" style="pointer-events: none;">
+                </div>
+                <br><br>
+            </div>
+
+            <!-- Uniform Shops Section -->
+            <div id="uniform-shops" class="gallery-section">
+                <p style="margin:0 auto; text-align:center; font-size: 18px; font-weight: 300;">Uniform Shops</p>
+                <br>
+                <div class="modal-image-display" onclick="openImageModal('assets/images/Uniform_Shops.jpg')" style="cursor: pointer;">
+                    <img src="assets/images/Uniform_Shops.jpg" alt="Uniform Shops" style="pointer-events: none;">
+                </div>
+                <br><br>
+            </div>
+        </div>
+        
+        <!-- Zoom Modal -->
+        <div id="zoomModal" class="modal">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <button class="modal-nav modal-prev" onclick="prevImage()">&lt;</button>
+            <div class="modal-content">
+                <img id="modalImage" src="" alt="Zoomed image">
+            </div>
+            <button class="modal-nav modal-next" onclick="nextImage()">&gt;</button>
+            <div class="modal-counter">
+                <span id="imageCounter">1 / 1</span>
+            </div>
+        </div>
+
+        <div id="footer" style="text-align:center; margin:0 auto; padding:10px;">
+            <p>पता - 935 भागीरथपुरा, मदर कान्वेंट हा.से. स्कूल तेजाजी मंदिर के पास इंदौर म. प्र.</p>
+            <p>Address - 935 Bhagirathpura, Mother Convent H.S. School, Near Tejaji Mandir, Indore (M.P.)</p>
+            <p>&copy;Copyright 2026, <a href="https://www.motherconventhsschool.in/">www.motherconventhsschool.in</a></p>
+        </div>
+    </div>
+
+    <script>
+        let currentImageIndex = 0;
+        let allImages = [];
+
+        // Initialize gallery
+        function initGallery() {
+            const items = document.querySelectorAll('.gallery-item');
+            allImages = Array.from(items).map(item => item.getAttribute('data-src'));
+        }
+
+        // Show gallery section
+        function showGallery(galleryId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.gallery-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Show selected section
+            document.getElementById(galleryId).classList.add('active');
+
+            // Update active nav item
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Automatically open the corresponding image based on gallery selected
+            if (galleryId === 'book-list-primary') {
+                openImageModal('assets/images/Nusery_to_Third.jpg');
+            } else if (galleryId === 'book-list-secondary') {
+                openImageModal('assets/images/Fourth_to_Nineth.jpg');
+            } else if (galleryId === 'book-stores') {
+                openImageModal('assets/images/Book_Stores.jpg');
+            } else if (galleryId === 'uniform-shops') {
+                openImageModal('assets/images/Uniform_Shops.jpg');
+            } else if (galleryId === 'photo-gallery') {
+                // Reinitialize gallery if showing photo-gallery
+                initGallery();
+            }
+        }
+
+        // Open image in modal/lightbox
+        function openImageModal(imageSrc) {
+            console.log('Opening modal with image:', imageSrc);
+            
+            const modalImage = document.getElementById('modalImage');
+            const zoomModal = document.getElementById('zoomModal');
+            const imageCounter = document.getElementById('imageCounter');
+            
+            if (!modalImage || !zoomModal) {
+                console.error('Modal elements not found');
+                alert('Error: Modal elements not found. Please refresh the page.');
+                return;
+            }
+            
+            // Set the image
+            modalImage.src = imageSrc;
+            
+            // Update counter
+            if (imageCounter) {
+                imageCounter.textContent = '1 / 1';
+            }
+            
+            // Reset navigation array
+            currentImageIndex = 0;
+            allImages = [imageSrc];
+            
+            // Show modal using CSS class
+            zoomModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            
+            console.log('Modal shown');
+        }
+
+        // Open modal with clicked image
+        function openModal(clickedElement) {
+            // Reinitialize gallery images first
+            initGallery();
+            
+            const imageSrc = clickedElement.getAttribute('data-src');
+            currentImageIndex = allImages.indexOf(imageSrc);
+            showImage();
+            
+            const zoomModal = document.getElementById('zoomModal');
+            if (zoomModal) {
+                // Use CSS class instead of inline styles
+                zoomModal.classList.add('show');
+            }
+            document.body.style.overflow = 'hidden';
+            console.log('Gallery modal opened:', currentImageIndex + 1, '/', allImages.length);
+        }
+
+        // Close modal
+        function closeModal() {
+            const zoomModal = document.getElementById('zoomModal');
+            if (zoomModal) {
+                // Only remove the show class - CSS handles the rest
+                zoomModal.classList.remove('show');
+            }
+            document.body.style.overflow = 'auto';
+            console.log('Modal closed - ready for next image');
+        }
+
+        // Show current image
+        function showImage() {
+            const imageSrc = allImages[currentImageIndex];
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('imageCounter').textContent = (currentImageIndex + 1) + ' / ' + allImages.length;
+        }
+
+        // Navigate to previous image
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+            showImage();
+        }
+
+        // Navigate to next image
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % allImages.length;
+            showImage();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            const zoomModal = document.getElementById('zoomModal');
+            const closeButton = document.querySelector('.modal-close');
+            
+            if (!zoomModal) {
+                console.error('Zoom modal not found');
+                return;
+            }
+            
+            // Close button click handler
+            if (closeButton) {
+                closeButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    console.log('Close button clicked');
+                    closeModal();
+                });
+            }
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                const modal = document.getElementById('zoomModal');
+                if (modal && modal.classList.contains('show')) {
+                    if (e.key === 'ArrowLeft') prevImage();
+                    if (e.key === 'ArrowRight') nextImage();
+                    if (e.key === 'Escape') closeModal();
+                }
+            });
+
+            // Close modal when clicking outside the image
+            zoomModal.addEventListener('click', (e) => {
+                if (e.target === zoomModal) {
+                    console.log('Outside click detected');
+                    closeModal();
+                }
+            });
+            
+            console.log('Event listeners setup complete');
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            console.log('Page load event triggered');
+            initGallery();
+            setupEventListeners();
+        });
+        
+        // Also run on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded event triggered');
+            setupEventListeners();
+        });
+    </script>
+</body>
+</html>

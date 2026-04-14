@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mother Convent Higher Secondary School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+        }
+
+        .splash-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .splash-background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            animation: zoomIn 0.8s ease-out;
+        }
+
+        .splash-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.5) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: fadeInDown 0.6s ease-out 0.2s backwards;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .text-section {
+            text-align: center;
+            color: white;
+            animation: fadeInUp 0.6s ease-out 0.4s backwards;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 40px 50px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .school-name {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 12px rgba(0,0,0,1),
+                         0 0 20px rgba(0,0,0,0.8);
+            color: #ffffff;
+        }
+
+        .school-name-hindi {
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin: 10px 0 15px 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,1),
+                         0 0 15px rgba(0,0,0,0.8);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .tagline {
+            font-size: 16px;
+            font-weight: 300;
+            opacity: 0.95;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .button-section {
+            animation: fadeIn 0.6s ease-out 0.8s backwards;
+        }
+
+        .enter-button {
+            padding: 16px 50px;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .enter-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .enter-button:active {
+            transform: translateY(-1px);
+        }
+
+        .skip-text {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+            font-weight: 400;
+            animation: fadeIn 0.6s ease-out 1.2s backwards;
+            cursor: help;
+            text-shadow: 2px 2px 6px rgba(0,0,0,1),
+                         0 0 10px rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(8px);
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(1.1);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive design - Tablet & Larger Mobile (768px - 1024px) */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .splash-overlay {
+                gap: 25px;
+            }
+
+            .school-name {
+                font-size: 40px;
+                letter-spacing: 1.5px;
+            }
+
+            .school-name-hindi {
+                font-size: 18px;
+            }
+
+            .text-section {
+                padding: 35px 40px;
+            }
+
+            .enter-button {
+                padding: 14px 42px;
+                font-size: 15px;
+            }
+        }
+
+        /* Responsive design - Medium Mobile (481px - 768px) */
+        @media (max-width: 768px) and (min-width: 481px) {
+            body {
+                overflow-y: auto;
+            }
+
+            .splash-overlay {
+                gap: 20px;
+            }
+
+            .school-name {
+                font-size: 32px;
+                letter-spacing: 1px;
+            }
+
+            .school-name-hindi {
+                font-size: 16px;
+            }
+
+            .text-section {
+                padding: 25px 25px;
+                margin: 0 15px;
+                max-width: 90%;
+            }
+
+            .enter-button {
+                padding: 12px 35px;
+                font-size: 14px;
+            }
+
+            .logo {
+                width: 90px;
+                height: 90px;
+            }
+
+            .skip-text {
+                bottom: 20px;
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+        }
+
+        /* Responsive design - Small Mobile (320px - 480px) */
+        @media (max-width: 480px) {
+            body {
+                overflow-y: auto;
+            }
+
+            .splash-overlay {
+                gap: 15px;
+                padding: 10px;
+            }
+
+            .school-name {
+                font-size: 26px;
+                letter-spacing: 0.5px;
+                margin-bottom: 10px;
+            }
+
+            .school-name-hindi {
+                font-size: 14px;
+                margin: 8px 0 10px 0;
+            }
+
+            .text-section {
+                padding: 20px 20px;
+                margin: 0 10px;
+                max-width: 95%;
+                border-radius: 10px;
+            }
+
+            .enter-button {
+                padding: 12px 32px;
+                font-size: 13px;
+                width: 90%;
+                max-width: 280px;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+                padding: 8px;
+            }
+
+            .skip-text {
+                bottom: 15px;
+                font-size: 11px;
+                padding: 7px 14px;
+                border-radius: 20px;
+            }
+        }
+
+        /* Extra small devices (below 320px) */
+        @media (max-width: 319px) {
+            .school-name {
+                font-size: 22px;
+            }
+
+            .school-name-hindi {
+                font-size: 12px;
+            }
+        }
+
+        /* Landscape orientation adjustments */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .splash-overlay {
+                gap: 10px;
+            }
+
+            .text-section {
+                padding: 15px 25px;
+            }
+
+            .school-name {
+                font-size: 24px;
+                margin-bottom: 5px;
+            }
+
+            .school-name-hindi {
+                font-size: 12px;
+                margin: 5px 0;
+            }
+
+            .enter-button {
+                padding: 10px 30px;
+                font-size: 12px;
+            }
+        }
+
+        /* Touch-friendly button sizes */
+        @media (hover: none) and (pointer: coarse) {
+            .enter-button {
+                min-height: 48px;
+                min-width: 48px;
+            }
+
+            .enter-button:active {
+                transform: scale(0.98);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="splash-container">
+        <img src="images/new_gallery/splash.jpeg" alt="School Campus" class="splash-background">
+        
+        <div class="splash-overlay">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="images/logo.png" alt="School Logo">
+                </div>
+            </div>
+
+            <div class="text-section">
+                <h1 class="school-name">Mother Convent</h1>
+                <p class="school-name-hindi">Higher Secondary School</p>
+                <p class="school-name-hindi">( जानकी मेमोरियल ऐजुकेशन सोसायटी द्वारा संचालित )</p>
+            </div>
+
+            <div class="button-section">
+                <button class="enter-button" onclick="enterGallery()">Enter Gallery</button>
+            </div>
+        </div>
+
+        <p class="skip-text">Auto-redirecting in <span id="countdown">5</span> seconds...</p>
+    </div>
+
+    <script>
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+
+        // Auto-redirect after 5 seconds
+        const autoRedirectTimer = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            if (countdown === 0) {
+                clearInterval(autoRedirectTimer);
+                enterGallery();
+            }
+        }, 1000);
+
+        function enterGallery() {
+            // Fade out transition
+            const container = document.querySelector('.splash-container');
+            container.style.opacity = '0';
+            container.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                window.location.href = 'gallery.html';
+            }, 500);
+        }
+
+        // Allow skipping with spacebar or Enter key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                clearInterval(autoRedirectTimer);
+                enterGallery();
+            }
+        });
+
+        // Allow skipping by clicking anywhere on the splash
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON') {
+                clearInterval(autoRedirectTimer);
+                enterGallery();
+            }
+        });
+    </script>
+</body>
+</html>
