@@ -6,6 +6,13 @@
     <title>Mother Convent Higher Secondary School</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
     <style>
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,6 +22,10 @@
         body {
             font-family: 'Roboto', sans-serif;
             overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .splash-container {
@@ -28,7 +39,7 @@
         .splash-background {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
             animation: zoomIn 0.8s ease-out;
         }
@@ -71,16 +82,7 @@
             border-radius: 50%;
         }
 
-        .text-section {
-            text-align: center;
-            color: white;
-            animation: fadeInUp 0.6s ease-out 0.4s backwards;
-            background: rgba(0, 0, 0, 0.45);
-            padding: 40px 50px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        }
+
 
         .school-name {
             font-size: 48px;
@@ -213,9 +215,7 @@
                 font-size: 18px;
             }
 
-            .text-section {
-                padding: 35px 40px;
-            }
+
 
             .enter-button {
                 padding: 14px 42px;
@@ -242,11 +242,7 @@
                 font-size: 16px;
             }
 
-            .text-section {
-                padding: 25px 25px;
-                margin: 0 15px;
-                max-width: 90%;
-            }
+
 
             .enter-button {
                 padding: 12px 35px;
@@ -287,12 +283,7 @@
                 margin: 8px 0 10px 0;
             }
 
-            .text-section {
-                padding: 20px 20px;
-                margin: 0 10px;
-                max-width: 95%;
-                border-radius: 10px;
-            }
+
 
             .enter-button {
                 padding: 12px 32px;
@@ -332,9 +323,7 @@
                 gap: 10px;
             }
 
-            .text-section {
-                padding: 15px 25px;
-            }
+
 
             .school-name {
                 font-size: 24px;
@@ -367,7 +356,7 @@
 </head>
 <body>
     <div class="splash-container">
-        <img src="images/new_gallery/splash.jpeg" alt="School Campus" class="splash-background">
+        <img src="../assets/images/Banner.jpg" alt="School Campus" class="splash-background">
         
         <div class="splash-overlay">
             <div class="logo-section">
@@ -376,11 +365,7 @@
                 </div>
             </div>
 
-            <div class="text-section">
-                <h1 class="school-name">Mother Convent</h1>
-                <p class="school-name-hindi">Higher Secondary School</p>
-                <p class="school-name-hindi">( जानकी मेमोरियल ऐजुकेशन सोसायटी द्वारा संचालित )</p>
-            </div>
+
 
             <div class="button-section">
                 <button class="enter-button" onclick="enterGallery()">Enter Gallery</button>
